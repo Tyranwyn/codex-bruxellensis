@@ -2,8 +2,8 @@ package com.fux.codexbruxellensis.services;
 
 import com.fux.codexbruxellensis.model.Song;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface SongFinder {
-    List<Song> findAll();
+    ArrayList<Song> findAll();
 }

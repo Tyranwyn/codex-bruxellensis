@@ -6,12 +6,11 @@ import com.fux.codexbruxellensis.model.Song;
 import org.androidannotations.annotations.EBean;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @EBean
 public class SampleSongFinder implements SongFinder {
     @Override
-    public List<Song> findAll() {
+    public ArrayList<Song> findAll() {
         Song p1 = new Song(Category.ASSOCIATION,"Technica", "T: Marc \"Zarre Gosseye\" en Gert Sanders", "<td>\n" +
                 " <div class=\"kring\">\n" +
                 "  Technica\n" +
@@ -104,7 +103,7 @@ public class SampleSongFinder implements SongFinder {
                 " </div>\n" +
                 "</td>\n", false);
 
-        List<Song> personList = new ArrayList<>();
+        ArrayList<Song> personList = new ArrayList<>();
         personList.add(p1);
         personList.add(p2);
 
