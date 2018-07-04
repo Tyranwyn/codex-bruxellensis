@@ -2,11 +2,18 @@ package com.fux.codexbruxellensis.model;
 
 public class Song {
 
+    private Category category;
     private String title;
     private String bgInfo;
     private String lyrics;
     private boolean removed;
     private Integer page;
+
+    private String associationName;
+    private String associationInfo;
+    private String battleCryName;
+    private String battleCryInfo;
+    private String battleCry;
 
     public Song() {}
 
@@ -57,6 +64,60 @@ public class Song {
 
     public Song setPage(Integer page) {
         this.page = page;
+        return this;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public Song setCategory(Category category) {
+        this.category = category;
+        return this;
+    }
+
+    public String getAssociationName() {
+        return associationName;
+    }
+
+    public Song setAssociationName(String associationName) {
+        this.associationName = associationName;
+        return this;
+    }
+
+    public String getAssociationInfo() {
+        return associationInfo;
+    }
+
+    public Song setAssociationInfo(String associationInfo) {
+        this.associationInfo = associationInfo;
+        return this;
+    }
+
+    public String getBattleCryName() {
+        return battleCryName;
+    }
+
+    public Song setBattleCryName(String battleCryName) {
+        this.battleCryName = battleCryName;
+        return this;
+    }
+
+    public String getBattleCryInfo() {
+        return battleCryInfo;
+    }
+
+    public Song setBattleCryInfo(String battleCryInfo) {
+        this.battleCryInfo = battleCryInfo;
+        return this;
+    }
+
+    public String getBattleCry() {
+        return battleCry;
+    }
+
+    public Song setBattleCry(String battleCry) {
+        this.battleCry = battleCry;
         return this;
     }
 }
