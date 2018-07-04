@@ -2,29 +2,19 @@ package com.fux.codexbruxellensis.model;
 
 public class Song {
 
-    private Category category;
     private String title;
-    private String bginfo;
+    private String bgInfo;
     private String lyrics;
     private boolean removed;
+    private Integer page;
 
-    public Song(Category category, String title, String bginfo, String lyrics, boolean removed) {
-        this.category = category;
+    public Song() {}
+
+    public Song(String title, String bgInfo, String lyrics) {
         this.title = title;
-        this.bginfo = bginfo;
+        this.bgInfo = bgInfo;
         this.lyrics = lyrics;
-        this.removed = removed;
     }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public Song setCategory(Category category) {
-        this.category = category;
-        return this;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -34,12 +24,12 @@ public class Song {
         return this;
     }
 
-    public String getBginfo() {
-        return bginfo;
+    public String getBgInfo() {
+        return bgInfo;
     }
 
-    public Song setBginfo(String bginfo) {
-        this.bginfo = bginfo;
+    public Song setBgInfo(String bgInfo) {
+        this.bgInfo = bgInfo;
         return this;
     }
 
@@ -58,6 +48,15 @@ public class Song {
 
     public Song setRemoved(boolean removed) {
         this.removed = removed;
+        return this;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public Song setPage(Integer page) {
+        this.page = page;
         return this;
     }
 }

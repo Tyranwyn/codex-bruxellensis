@@ -12,14 +12,5 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="30dp"
         android:textSize="16sp"/>
-    <TextView
-        android:id="@+id/bgInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BgInfo"
-        android:layout_toRightOf="@+id/title"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"
-        android:textSize="16sp"/>
 
 </RelativeLayout>

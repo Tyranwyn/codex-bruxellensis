@@ -1,5 +1,6 @@
 package com.fux.codexbruxellensis.services;
 
+import com.fux.codexbruxellensis.model.AssociationSong;
 import com.fux.codexbruxellensis.model.Category;
 import com.fux.codexbruxellensis.model.Song;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class SampleSongFinder implements SongFinder {
     @Override
     public ArrayList<Song> findAll() {
-        Song p1 = new Song(Category.ASSOCIATION,"Technica", "T: Marc \"Zarre Gosseye\" en Gert Sanders", "<td>\n" +
+        Song p1 = new AssociationSong("Technica", "T: Marc \"Zarre Gosseye\" en Gert Sanders", "<td>\n" +
                 " <div class=\"kring\">\n" +
                 "  Technica\n" +
                 "Erasmushogeschool Brussel, Departement Industriële Wetenschappen en Technologie\n" +
@@ -59,8 +60,8 @@ public class SampleSongFinder implements SongFinder {
                 "We laten ons niet kisten\n" +
                 "Schachten aanhoor ons lied\n" +
                 " </div>\n" +
-                "</td>\n", true);
-        Song p2 = new Song(Category.OFFICIAL,"Ave Confrater", "\"  Dit lied wordt gezongen bij de overdracht van het praesesschap. Na de overhandiging van het praeseslint en de eedaflegging, gaan de oude en de nieuwe senior over tot de Ave Confrater.\\n\"", "<td>\n" +
+                "</td>\n");
+        Song p2 = new Song("Ave Confrater", "\"  Dit lied wordt gezongen bij de overdracht van het praesesschap. Na de overhandiging van het praeseslint en de eedaflegging, gaan de oude en de nieuwe senior over tot de Ave Confrater.\\n\"", "<td>\n" +
                 " <div class=\"title\">\n" +
                 "  Ave Confrater\n" +
                 " </div>\n" +
@@ -101,7 +102,7 @@ public class SampleSongFinder implements SongFinder {
                 "  Beide commilitones staan terug recht.\n" +
                 "dverse 1+2 Ave confrater\n" +
                 " </div>\n" +
-                "</td>\n", false);
+                "</td>\n");
 
         ArrayList<Song> personList = new ArrayList<>();
         personList.add(p1);

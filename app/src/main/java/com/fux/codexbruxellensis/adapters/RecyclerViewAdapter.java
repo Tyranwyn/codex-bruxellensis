@@ -16,7 +16,7 @@ import com.fux.codexbruxellensis.model.Song;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView. Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
 
@@ -40,13 +40,9 @@ public class RecyclerViewAdapter extends RecyclerView. Adapter<RecyclerViewAdapt
         Log.d(TAG, "onBindViewHolder: called.");
 
         holder.title.setText(mSongs.get(position).getTitle());
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + mSongs.get(position).getTitle());
-
-                Toast.makeText(mContext, mSongs.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-            }
+        holder.parentLayout.setOnClickListener(view -> {
+            Log.d(TAG, "onClick: clicked on: " + mSongs.get(position).getTitle());
+            Toast.makeText(mContext, mSongs.get(position).getTitle(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -57,14 +53,12 @@ public class RecyclerViewAdapter extends RecyclerView. Adapter<RecyclerViewAdapt
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title;
-        TextView bgInfo;
-        RelativeLayout parentLayout;
+        public TextView title;
+        public RelativeLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            bgInfo = itemView.findViewById(R.id.bgInfo);
             parentLayout = itemView.findViewById(R.id.parentLayout);
         }
     }
