@@ -24,7 +24,7 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
 
     @Override
     protected void onBindViewHolder(@NonNull SongHolder holder, int position, @NonNull Song model) {
-        holder.getTitle().setText(model.getAssociationName());
+        holder.getTitle().setText(model.getAssociationName().isEmpty() ? model.getTitle() : model.getAssociationName());
         holder.getParentLayout()
                 .setOnClickListener(view -> Toast.makeText(context, model.getAssociationInfo(), Toast.LENGTH_LONG).show());
     }
