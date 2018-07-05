@@ -532,6 +532,32 @@
       "page": 87,
       "removed": false,
       "category": "ASSOCIATION"
+    },
+    {
+      "title": "Lied van Geen Taal",
+      "bgInfo": "",
+      "lyrics": "Brusselse studenten van de \"Klauwaert ende Geus\"\nStrijden wij voor vrijheid, steeds getrouw aan onze leus\nRoemberuchte rolders blijven wij tot in de dood\nDe schrik van de kaloot.\n\nGlorie, glorie, alleluja\nBrusselse studenten van de \"Klauwaert ende Geus\"\nGlorie, glorie, alleluja\nGetrouw aan onze leus.\n\nHij die ’t licht niet kan verdragen der \"Geen Taalse zon\"\nHij weze een kaloot of een bekrompen franskiljon\nMoet maar zien dat hij in onze weg niet komt te staan\nOf ’t zal hem slecht vergaan.\n\nFiere dragers van de fakkels van de VUB\nDragen w’in de wereld en doorheen heel Vlaanderen mee\nOnze wil tot leven vrij van dwang en levensblij\n\"Geen Talers\" blijven wij.",
+      "associationName": "Brussels Studentengenootschap \"Geen Taal Geen Vrijheid\"",
+      "associationInfo": "Lied van de vrijzinnige student te Brussel\nGesticht in 1856 als het Taalminnend Studen-\ntengenootschap \"Schild ende Vriend\"\nKleuren: oranje-blanje-bleu",
+      "battleCryName": "",
+      "battleCryInfo": "",
+      "battleCry": "",
+      "page": 91,
+      "removed": false,
+      "category": "OFFICIAL"
+    },
+    {
+      "title": "BSK-Lied",
+      "bgInfo": "M: ‘O, Toreador’",
+      "lyrics": "Wij zijn student,\nHet is u bekend\nVan d’Hogeschool, bij ’t BSK\nWij dragen vrijzinnigheid in ’t hart,\nEn geen kaloot die ons tart,\nWij zuipen altijd voort\nTot in den dood\nDen BSK-student",
+      "associationName": "Brussels Seniorenkonvent",
+      "associationInfo": "Overkoepelende studentenkring voor\nBrusselse vrijzinnige Hogeschoolstudenten en\nde Koninklijke Militaire School\nGesticht in 1978\nKleuren: rood-groen",
+      "battleCryName": "",
+      "battleCryInfo": "",
+      "battleCry": "",
+      "page": 92,
+      "removed": false,
+      "category": "OFFICIAL"
     }
   ]
 }
