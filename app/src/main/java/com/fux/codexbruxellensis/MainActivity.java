@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -26,7 +27,10 @@ public class MainActivity extends Activity {
 
     @AfterViews
     void bindAdapter() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.setPersistenceEnabled(true);
+
+        DatabaseReference databaseReference = database
                 .getReference();
 
         Query songsQuery = databaseReference.child("songs");
