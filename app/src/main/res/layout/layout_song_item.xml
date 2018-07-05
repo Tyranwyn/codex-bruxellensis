@@ -5,7 +5,7 @@
     android:id="@+id/parentLayout">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/listTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"

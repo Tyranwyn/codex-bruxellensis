@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="50dp">
+            <TextView
+                android:id="@+id/detailAssociationName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="20dp"
+                android:text="Association Name"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detailAssociationInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailAssociationName"
+                android:layout_marginBottom="20dp"
+                android:text="Association Info" />
+
+
+            <TextView
+                android:id="@+id/detailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailAssociationInfo"
+                android:textSize="18sp"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold"
+                android:text="Title" />
+
+            <TextView
+                android:id="@+id/detailBgInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailTitle"
+                android:layout_marginBottom="20dp"
+                android:textStyle="italic"
+                android:text="Background Info" />
+
+            <TextView
+                android:id="@+id/detailLyrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/detailBgInfo"
+                android:layout_marginBottom="20dp"
+                android:text="Lyrics" />
+
+            <TextView
+                android:id="@+id/detailBattleCryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailLyrics"
+                android:textSize="18sp"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold"
+                android:text="Battle Cry Name" />
+
+            <TextView
+                android:id="@+id/detailBattleCryInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailBattleCryName"
+                android:layout_marginBottom="20dp"
+                android:textStyle="italic"
+                android:text="Battle Cry Info" />
+
+            <TextView
+                android:id="@+id/detailBattleCry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/detailBattleCryInfo"
+                android:layout_marginBottom="20dp"
+                android:text="Battle Cry" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,6 +1,8 @@
 package com.fux.codexbruxellensis.model;
 
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable {
 
     private Category category;
     private String title;

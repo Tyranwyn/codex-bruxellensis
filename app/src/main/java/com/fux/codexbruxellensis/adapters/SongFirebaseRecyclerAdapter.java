@@ -5,11 +5,11 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fux.codexbruxellensis.R;
+import com.fux.codexbruxellensis.SongDetailActivity_;
 import com.fux.codexbruxellensis.model.Song;
 import com.fux.codexbruxellensis.viewholders.SongHolder;
 
@@ -23,10 +23,13 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull SongHolder holder, int position, @NonNull Song model) {
-        holder.getTitle().setText(model.getAssociationName().isEmpty() ? model.getTitle() : model.getAssociationName());
+    protected void onBindViewHolder(@NonNull SongHolder holder, int position, @NonNull Song currentSong) {
+        holder.getTitle().setText(currentSong.getAssociationName().isEmpty() ? currentSong.getTitle() : currentSong.getAssociationName());
         holder.getParentLayout()
-                .setOnClickListener(view -> Toast.makeText(context, model.getAssociationInfo(), Toast.LENGTH_LONG).show());
+                .setOnClickListener(view ->
+                        SongDetailActivity_.intent(context)
+                                .currentSong(currentSong)
+                                .start());
     }
 
     @NonNull

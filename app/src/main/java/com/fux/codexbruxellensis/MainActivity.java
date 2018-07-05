@@ -26,10 +26,10 @@ public class MainActivity extends Activity {
 
     @AfterViews
     void bindAdapter() {
-        DatabaseReference songsReference = FirebaseDatabase.getInstance()
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReference();
 
-        Query songsQuery = songsReference.child("songs");
+        Query songsQuery = databaseReference.child("songs");
 
         FirebaseRecyclerOptions<Song> songOptions =
                 new FirebaseRecyclerOptions.Builder<Song>()

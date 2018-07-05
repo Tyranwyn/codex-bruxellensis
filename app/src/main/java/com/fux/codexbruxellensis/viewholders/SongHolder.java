@@ -13,7 +13,7 @@ public class SongHolder extends RecyclerView.ViewHolder {
 
     public SongHolder(View itemView) {
         super(itemView);
-        title = itemView.findViewById(R.id.title);
+        title = itemView.findViewById(R.id.listTitle);
         parentLayout = itemView.findViewById(R.id.parentLayout);
     }
 
