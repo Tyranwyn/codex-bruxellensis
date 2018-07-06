@@ -1,5 +1,7 @@
 package com.fux.codexbruxellensis;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SearchEvent;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -92,6 +95,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @AfterViews
+    void configureSearch() {
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            System.out.println(query);
+            adapter.getFilter().filter(query);
+        }
+    }
+
     @Click(R.id.button)
     void activateCantusModus() {
     }
@@ -132,9 +146,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.action_search:
-                System.out.println("SEARCH BOIS");
                 return true;
         }
         return super.onOptionsItemSelected(item);
