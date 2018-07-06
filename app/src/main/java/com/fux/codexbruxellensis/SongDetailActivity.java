@@ -1,6 +1,6 @@
 package com.fux.codexbruxellensis;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,7 +12,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_song_detail)
-public class SongDetailActivity extends Activity {
+public class SongDetailActivity extends AppCompatActivity {
 
     @Extra
     Song currentSong;
