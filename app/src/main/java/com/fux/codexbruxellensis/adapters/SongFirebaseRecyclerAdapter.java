@@ -27,9 +27,10 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
         holder.getTitle().setText(currentSong.getAssociationName().isEmpty() ? currentSong.getTitle() : currentSong.getAssociationName());
         holder.getParentLayout()
                 .setOnClickListener(view ->
-                        SongDetailActivity_.intent(context)
-                                .currentSong(currentSong)
-                                .start());
+                    SongDetailActivity_.intent(context)
+                            .currentSong(currentSong)
+                            .start()
+                );
     }
 
     @NonNull

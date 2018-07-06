@@ -1,6 +1,8 @@
 package com.fux.codexbruxellensis;
 
-import android.support.annotation.NonNull;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,20 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fux.codexbruxellensis.adapters.SongFirebaseRecyclerAdapter;
-import com.fux.codexbruxellensis.model.Category;
 import com.fux.codexbruxellensis.model.Song;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -45,12 +44,21 @@ public class MainActivity extends AppCompatActivity {
 
     protected static FirebaseDatabase database = FirebaseDatabase.getInstance();
     protected static DatabaseReference databaseReference;
+    protected SongFirebaseRecyclerAdapter adapter;
 
     @AfterViews
     void databaseBinding() {
         database.setPersistenceEnabled(true);
         databaseReference = database.getReference();
         songRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        songRecyclerView.setVerticalFadingEdgeEnabled(true);
+
+
+        if (getTitle().equals("All") || getTitle().equals("Codex Bruxellensis"))
+            attachRecyclerViewAdapter(databaseReference.child("songs"));
+        else
+            attachRecyclerViewAdapter(createCategoryQueryBasedOnTitle());
+        adapter.startListening();
     }
 
     @AfterViews
@@ -65,23 +73,44 @@ public class MainActivity extends AppCompatActivity {
             item.setChecked(true);
             drawerLayout.closeDrawers();
             String itemTitle = item.getTitle().toString();
-            if (itemTitle.equals("All"))
+            if (itemTitle.equals("All")) {
+                adapter.stopListening();
                 attachRecyclerViewAdapter(databaseReference.child("songs"));
-            else
+                adapter.startListening();
+            }
+            else {
+                adapter.stopListening();
                 attachRecyclerViewAdapter(databaseReference.child("songs").orderByChild("category").equalTo(itemTitle.toUpperCase()));
+                adapter.startListening();
+            }
             setTitle(itemTitle);
             return true;
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (getTitle().equals("All") || getTitle().equals("Codex Bruxellensis"))
-            attachRecyclerViewAdapter(databaseReference.child("songs"));
-        else
-            attachRecyclerViewAdapter(databaseReference.child("songs").orderByChild("category").equalTo(getTitle().toString().toUpperCase()));
+    @AfterViews
+    void runner() {
+        final Handler handler = new Handler();
+        class MyRunnable implements Runnable {
+            private Handler handler;
+            private RecyclerView songRecyclerView;
+            public MyRunnable(Handler handler, RecyclerView songRecyclerView) {
+                this.handler = handler;
+                this.songRecyclerView = songRecyclerView;
+            }
+            @Override
+            public void run() {
+                this.handler.postDelayed(this, 500);
+                System.out.println("offset: " + songRecyclerView.computeVerticalScrollOffset());
+            }
+        }
+//        handler.post(new MyRunnable(handler, songRecyclerView));
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.stopListening();
     }
 
     @Override
@@ -98,9 +127,12 @@ public class MainActivity extends AppCompatActivity {
         FirebaseRecyclerOptions<Song> songOptions =
                 new FirebaseRecyclerOptions.Builder<Song>()
                         .setQuery(songsQuery, Song.class)
-                        .setLifecycleOwner(this)
                         .build();
-        RecyclerView.Adapter adapter = new SongFirebaseRecyclerAdapter(this, songOptions);
+        adapter = new SongFirebaseRecyclerAdapter(this, songOptions);
         songRecyclerView.setAdapter(adapter);
+    }
+
+    private Query createCategoryQueryBasedOnTitle() {
+        return databaseReference.child("songs").orderByChild("category").equalTo(getTitle().toString().toUpperCase());
     }
 }
