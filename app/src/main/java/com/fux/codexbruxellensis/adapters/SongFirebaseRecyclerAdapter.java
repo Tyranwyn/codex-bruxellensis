@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fux.codexbruxellensis.R;
 import com.fux.codexbruxellensis.SongDetailActivity_;
@@ -18,7 +17,7 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
     private Context context;
 
     public SongFirebaseRecyclerAdapter(Context context, @NonNull FirebaseRecyclerOptions<Song> options) {
-        super(options);
+        super(options, true);
         this.context = context;
     }
 
@@ -39,5 +38,11 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_song_item, parent, false);
         return new SongHolder(view);
+    }
+
+    @Override
+    protected boolean filterCondition(Song model, String filterPattern) {
+        return model.getTitle().toLowerCase().contains(filterPattern) ||
+                model.getAssociationName().toLowerCase().contains(filterPattern);
     }
 }

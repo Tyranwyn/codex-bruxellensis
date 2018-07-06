@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -23,12 +24,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
-// https://www.youtube.com/watch?v=Vyqz_-sJGFk
 
     @ViewById
     DrawerLayout drawerLayout;
@@ -39,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
     @ViewById
     RecyclerView songRecyclerView;
-    @ViewById
-    FloatingActionButton button;
 
     protected static FirebaseDatabase database = FirebaseDatabase.getInstance();
     protected static DatabaseReference databaseReference;
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         databaseReference = database.getReference();
         songRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         songRecyclerView.setVerticalFadingEdgeEnabled(true);
-
 
         if (getTitle().equals("All") || getTitle().equals("Codex Bruxellensis"))
             attachRecyclerViewAdapter(databaseReference.child("songs"));
@@ -66,8 +66,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
+
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24px);
+
+//        actionBar.setDisplayShowCustomEnabled(true);
+//        actionBar.setCustomView(R.menu.actionbar_view);
 
         navigationView.setNavigationItemSelectedListener(item -> {
             item.setChecked(true);
@@ -88,7 +92,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @AfterViews
+    @Click(R.id.button)
+    void activateCantusModus() {
+    }
+
+    /*@AfterViews
     void runner() {
         final Handler handler = new Handler();
         class MyRunnable implements Runnable {
@@ -105,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 //        handler.post(new MyRunnable(handler, songRecyclerView));
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
@@ -114,10 +122,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_view, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.action_search:
+                System.out.println("SEARCH BOIS");
                 return true;
         }
         return super.onOptionsItemSelected(item);
