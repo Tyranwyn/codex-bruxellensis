@@ -23,7 +23,10 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
 
     @Override
     protected void onBindViewHolder(@NonNull SongHolder holder, int position, @NonNull Song currentSong) {
-        holder.getTitle().setText(currentSong.getAssociationName().isEmpty() ? currentSong.getTitle() : currentSong.getAssociationName());
+        holder.getTitle()
+                .setText(currentSong.getAssociationName().isEmpty() ? currentSong.getTitle() : currentSong.getAssociationName());
+        holder.getPageNumber()
+                .setText(currentSong.getPage().toString());
         holder.getParentLayout()
                 .setOnClickListener(view ->
                     SongDetailActivity_.intent(context)
@@ -43,6 +46,7 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
     @Override
     protected boolean filterCondition(Song model, String filterPattern) {
         return model.getTitle().toLowerCase().contains(filterPattern) ||
-                model.getAssociationName().toLowerCase().contains(filterPattern);
+                model.getAssociationName().toLowerCase().contains(filterPattern) ||
+                model.getPage().toString().contains(filterPattern);
     }
 }
