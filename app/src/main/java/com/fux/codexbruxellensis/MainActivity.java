@@ -2,6 +2,9 @@ package com.fux.codexbruxellensis;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,10 +30,11 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-@EActivity(R.layout.activity_main)
+@EActivity
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+
     @ViewById
     DrawerLayout drawerLayout;
     @ViewById
@@ -44,10 +49,18 @@ public class MainActivity extends AppCompatActivity {
     protected static DatabaseReference databaseReference;
     protected SongFirebaseRecyclerAdapter adapter;
     private SearchView searchView;
+    private static boolean cantusModus = false;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(cantusModus ? R.style.Theme_AppCompat_NoActionBar : R.style.Theme_AppCompat_DayNight_NoActionBar);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
 
     @AfterViews
     void databaseBinding() {
-        database.setPersistenceEnabled(true);
+//        database.setPersistenceEnabled(true);
         databaseReference = database.getReference();
         songRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         songRecyclerView.setVerticalFadingEdgeEnabled(true);
@@ -96,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Click(R.id.button)
     void activateCantusModus() {
+        cantusModus = !cantusModus;
+        recreate();
     }
 
     /*@AfterViews
