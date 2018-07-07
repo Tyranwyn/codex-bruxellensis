@@ -11,18 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="true">
-        <activity android:name=".MainActivity_">
+        <meta-data android:name="android.app.default_searchable"
+            android:value=".MainActivity_" />
+        <activity android:name=".MainActivity_"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
-        <activity android:name=".SongDetailActivity_">
+        <activity android:name=".SongDetailActivity_"
+            android:launchMode="singleTop">
 
         </activity>
     </application>

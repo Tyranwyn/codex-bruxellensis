@@ -1,11 +1,7 @@
 package com.fux.codexbruxellensis;
 
 import android.app.SearchManager;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.content.Context;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,11 +9,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SearchEvent;
-import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fux.codexbruxellensis.adapters.SongFirebaseRecyclerAdapter;
@@ -29,13 +24,12 @@ import com.google.firebase.database.Query;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     @ViewById
     DrawerLayout drawerLayout;
     @ViewById
@@ -49,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected static FirebaseDatabase database = FirebaseDatabase.getInstance();
     protected static DatabaseReference databaseReference;
     protected SongFirebaseRecyclerAdapter adapter;
+    private SearchView searchView;
 
     @AfterViews
     void databaseBinding() {
@@ -73,10 +68,9 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24px);
 
-//        actionBar.setDisplayShowCustomEnabled(true);
-//        actionBar.setCustomView(R.menu.actionbar_view);
-
         navigationView.setNavigationItemSelectedListener(item -> {
+            clearSearchBar();
+
             item.setChecked(true);
             drawerLayout.closeDrawers();
             String itemTitle = item.getTitle().toString();
@@ -84,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.stopListening();
                 attachRecyclerViewAdapter(databaseReference.child("songs"));
                 adapter.startListening();
-            }
-            else {
+            } else {
                 adapter.stopListening();
                 attachRecyclerViewAdapter(databaseReference.child("songs").orderByChild("category").equalTo(itemTitle.toUpperCase()));
                 adapter.startListening();
@@ -95,15 +88,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @AfterViews
-    void configureSearch() {
-        // Get the intent, verify the action and get the query
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            System.out.println(query);
-            adapter.getFilter().filter(query);
-        }
+    private void clearSearchBar() {
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+        searchView.setIconified(true);
     }
 
     @Click(R.id.button)
@@ -138,6 +126,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_view, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return true;
     }
 
