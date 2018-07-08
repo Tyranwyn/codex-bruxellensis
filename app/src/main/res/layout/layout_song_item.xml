@@ -16,16 +16,14 @@
         android:id="@+id/listTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Title"
         android:textSize="16sp"
         android:layout_weight=".80"
-        android:paddingLeft="15dp"/>
+        android:paddingStart="15dp"/>
 
     <TextView
         android:id="@+id/listPageNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Page Number"
         android:textSize="16sp"
         android:layout_weight=".08"/>
 

@@ -22,7 +22,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="20dp"
-                android:text="Association Name"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -31,8 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/detailAssociationName"
-                android:layout_marginBottom="20dp"
-                android:text="Association Info" />
+                android:layout_marginBottom="20dp" />
 
 
             <TextView
@@ -42,8 +40,7 @@
                 android:layout_below="@id/detailAssociationInfo"
                 android:textSize="18sp"
                 android:layout_marginBottom="20dp"
-                android:textStyle="bold"
-                android:text="Title" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/detailBgInfo"
@@ -51,16 +48,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/detailTitle"
                 android:layout_marginBottom="20dp"
-                android:textStyle="italic"
-                android:text="Background Info" />
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/detailLyrics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/detailBgInfo"
-                android:layout_marginBottom="20dp"
-                android:text="Lyrics" />
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:id="@+id/detailBattleCryName"
@@ -69,8 +64,7 @@
                 android:layout_below="@id/detailLyrics"
                 android:textSize="18sp"
                 android:layout_marginBottom="20dp"
-                android:textStyle="bold"
-                android:text="Battle Cry Name" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/detailBattleCryInfo"
@@ -78,16 +72,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/detailBattleCryName"
                 android:layout_marginBottom="20dp"
-                android:textStyle="italic"
-                android:text="Battle Cry Info" />
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/detailBattleCry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/detailBattleCryInfo"
-                android:layout_marginBottom="20dp"
-                android:text="Battle Cry" />
+                android:layout_marginBottom="20dp" />
         </RelativeLayout>
     </ScrollView>
 
