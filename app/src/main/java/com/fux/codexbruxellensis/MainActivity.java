@@ -3,8 +3,10 @@ package com.fux.codexbruxellensis;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -44,11 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
     @ViewById
     RecyclerView songRecyclerView;
+    @ViewById
+    FloatingActionButton button;
 
-    protected static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    protected static FirebaseDatabase database;
     protected static DatabaseReference databaseReference;
     protected SongFirebaseRecyclerAdapter adapter;
     private SearchView searchView;
+
     private static boolean cantusModus = false;
 
     @Override
@@ -60,7 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
     @AfterViews
     void databaseBinding() {
-//        database.setPersistenceEnabled(true);
+        button.setImageResource(cantusModus ? R.drawable.ic_day_24px :  R.drawable.ic_night_24px);
+
+        if (null == database) {
+            database = FirebaseDatabase.getInstance();
+            database.setPersistenceEnabled(true);
+        }
+
         databaseReference = database.getReference();
         songRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         songRecyclerView.setVerticalFadingEdgeEnabled(true);
@@ -182,5 +193,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Query createCategoryQueryBasedOnTitle() {
         return databaseReference.child("songs").orderByChild("category").equalTo(getTitle().toString().toUpperCase());
+    }
+
+    public static boolean isCantusModus() {
+        return cantusModus;
     }
 }

@@ -1,5 +1,7 @@
 package com.fux.codexbruxellensis;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +13,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
-@EActivity(R.layout.activity_song_detail)
+@EActivity
 public class SongDetailActivity extends AppCompatActivity {
 
     @Extra
@@ -32,6 +34,13 @@ public class SongDetailActivity extends AppCompatActivity {
     TextView detailBattleCryInfo;
     @ViewById
     TextView detailBattleCry;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+            setTheme(MainActivity.isCantusModus() ? R.style.Theme_AppCompat_NoActionBar : R.style.Theme_AppCompat_DayNight_NoActionBar);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_song_detail);
+    }
 
     @AfterViews
     public void bindFields() {
