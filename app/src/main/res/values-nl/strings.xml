@@ -1,0 +1,11 @@
+<resources>
+    <string name="menu_all">Alles</string>
+    <string name="menu_association">Kringen</string>
+    <string name="menu_official">Officieel</string>
+    <string name="menu_dutch">Nerderlandstalig</string>
+    <string name="menu_french">Frans</string>
+    <string name="menu_german">Duits</string>
+    <string name="menu_english">Engels</string>
+    <string name="menu_foreign">Anderstalig</string>
+    <string name="menu_favorites">Favorieten</string>
+</resources>

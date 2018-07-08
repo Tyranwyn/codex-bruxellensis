@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     @AfterViews
     void drawButtonIcon() {
+        System.out.println(getResources().getConfiguration().getLocales());
         button.setImageResource(cantusModus ? R.drawable.ic_day_24px :  R.drawable.ic_night_24px);
     }
 
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         songRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         songRecyclerView.setVerticalFadingEdgeEnabled(true);
 
-        if (getTitle().equals("All") || getTitle().equals("Codex Bruxellensis"))
+        if (getTitle().equals(getResources().getString(R.string.menu_all)) || getTitle().equals(getResources().getString(R.string.app_name)))
             attachRecyclerViewAdapter(databaseReference.child("songs"));
         else
             attachRecyclerViewAdapter(createCategoryQueryBasedOnTitle());
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             item.setChecked(true);
             drawerLayout.closeDrawers();
             String itemTitle = item.getTitle().toString();
-            if (itemTitle.equals("All")) {
+            if (itemTitle.equals(getResources().getString(R.string.menu_all))) {
                 adapter.stopListening();
                 attachRecyclerViewAdapter(databaseReference.child("songs"));
                 adapter.startListening();

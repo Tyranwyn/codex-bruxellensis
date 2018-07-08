@@ -1,0 +1,11 @@
+<resources>
+    <string name="menu_all">Tous</string>
+    <string name="menu_association">Cercles</string>
+    <string name="menu_official">Officielle</string>
+    <string name="menu_dutch">Néerlandais</string>
+    <string name="menu_french">Français</string>
+    <string name="menu_german">Allemand</string>
+    <string name="menu_english">Anglais</string>
+    <string name="menu_foreign">Foreign</string>
+    <string name="menu_favorites">Langue Étrangère</string>
+</resources>
