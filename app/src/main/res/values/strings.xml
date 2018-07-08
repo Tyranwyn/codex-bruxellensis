@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Codex Bruxellensis</string>
+    <string name="songs_database">songs</string>
 </resources>

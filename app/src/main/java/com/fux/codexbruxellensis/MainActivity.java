@@ -2,8 +2,6 @@ package com.fux.codexbruxellensis;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,12 +14,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fux.codexbruxellensis.adapters.SongFirebaseRecyclerAdapter;
+import com.fux.codexbruxellensis.model.Preferences_;
 import com.fux.codexbruxellensis.model.Song;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,6 +29,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 @EActivity
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     @ViewById
     FloatingActionButton button;
 
+    @Pref
+    static Preferences_ preferences;
+
     protected static FirebaseDatabase database;
     protected static DatabaseReference databaseReference;
     protected SongFirebaseRecyclerAdapter adapter;
@@ -64,9 +66,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @AfterViews
-    void databaseBinding() {
+    void drawButtonIcon() {
         button.setImageResource(cantusModus ? R.drawable.ic_day_24px :  R.drawable.ic_night_24px);
+    }
 
+    @AfterViews
+    void databaseBinding() {
         if (null == database) {
             database = FirebaseDatabase.getInstance();
             database.setPersistenceEnabled(true);
@@ -187,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<Song>()
                         .setQuery(songsQuery, Song.class)
                         .build();
-        adapter = new SongFirebaseRecyclerAdapter(this, songOptions);
+        adapter = new SongFirebaseRecyclerAdapter(this, songOptions, preferences);
         songRecyclerView.setAdapter(adapter);
     }
 
@@ -198,4 +203,5 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isCantusModus() {
         return cantusModus;
     }
+
 }

@@ -8,14 +8,14 @@ public class Song implements Serializable {
     private String title;
     private String bgInfo;
     private String lyrics;
-    private boolean removed;
-    private Integer page;
-
     private String associationName;
     private String associationInfo;
     private String battleCryName;
     private String battleCryInfo;
     private String battleCry;
+
+    private Integer page;
+    private boolean removed;
 
     public Song() {}
 

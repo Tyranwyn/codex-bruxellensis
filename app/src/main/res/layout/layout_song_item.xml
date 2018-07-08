@@ -4,14 +4,22 @@
     android:padding="15dp"
     android:id="@+id/parentLayout">
 
+    <ToggleButton
+        android:id="@+id/favoriteToggleButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.12"
+        style="@style/toggleButton"
+        android:background="@drawable/ic_toggle_bg"/>
+
     <TextView
         android:id="@+id/listTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:layout_marginStart="15dp"
         android:textSize="16sp"
-        android:layout_weight=".92"/>
+        android:layout_weight=".80"
+        android:paddingLeft="15dp"/>
 
     <TextView
         android:id="@+id/listPageNumber"

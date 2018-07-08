@@ -5,20 +5,30 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.fux.codexbruxellensis.MainActivity;
 import com.fux.codexbruxellensis.R;
 import com.fux.codexbruxellensis.SongDetailActivity_;
+import com.fux.codexbruxellensis.model.Preferences_;
 import com.fux.codexbruxellensis.model.Song;
 import com.fux.codexbruxellensis.viewholders.SongHolder;
+
+import org.androidannotations.annotations.EBean;
+
+import java.util.Set;
 
 public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, SongHolder> {
 
     private Context context;
+    private Preferences_ preferences;
 
-    public SongFirebaseRecyclerAdapter(Context context, @NonNull FirebaseRecyclerOptions<Song> options) {
+    public SongFirebaseRecyclerAdapter(Context context, @NonNull FirebaseRecyclerOptions<Song> options, Preferences_ preferences) {
         super(options, true);
         this.context = context;
+        this.preferences = preferences;
     }
 
     @Override
@@ -27,6 +37,19 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
                 .setText(currentSong.getAssociationName().isEmpty() ? currentSong.getTitle() : currentSong.getAssociationName());
         holder.getPageNumber()
                 .setText(currentSong.getPage().toString());
+
+        Set<String> favoredSongs = preferences.favorites().get();
+        holder.getFavoriteToggleButton().setChecked(favoredSongs.contains(currentSong.getTitle()));
+
+        holder.getFavoriteToggleButton()
+                .setOnClickListener(v -> {
+                    if (holder.getFavoriteToggleButton().isChecked())
+                        favoredSongs.add(currentSong.getTitle());
+                    else
+                        favoredSongs.remove(currentSong.getTitle());
+                    preferences.favorites().put(favoredSongs);
+                });
+
         holder.getParentLayout()
                 .setOnClickListener(view ->
                     SongDetailActivity_.intent(context)
