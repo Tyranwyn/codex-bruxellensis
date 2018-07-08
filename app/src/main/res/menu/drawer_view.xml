@@ -4,34 +4,42 @@
         <item
             android:id="@+id/navAll"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="All" />
+            android:title="@string/menu_all"
+            android:checked="true"/>
         <item
             android:id="@+id/navAssociation"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="Association" />
+            android:title="@string/menu_association" />
         <item
             android:id="@+id/navOfficial"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="Official" />
+            android:title="@string/menu_official" />
         <item
             android:id="@+id/navDutch"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="Dutch" />
+            android:title="@string/menu_dutch" />
         <item
             android:id="@+id/navFrench"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="French" />
+            android:title="@string/menu_french" />
         <item
             android:id="@+id/navGerman"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="German" />
+            android:title="@string/menu_german" />
         <item
             android:id="@+id/navEnglish"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="English" />
+            android:title="@string/menu_english" />
         <item
             android:id="@+id/navForeign"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="Foreign" />
+            android:title="@string/menu_foreign" />
+    </group>
+    <group android:menuCategory="secondary"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/checkFavorite"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="@string/menu_favorites" />
     </group>
 </menu>

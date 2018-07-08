@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Codex Bruxellensis</string>
     <string name="songs_database">songs</string>
+    <string name="menu_all">All</string>
+    <string name="menu_association">Association</string>
+    <string name="menu_official">Official</string>
+    <string name="menu_dutch">Dutch</string>
+    <string name="menu_french">French</string>
+    <string name="menu_german">German</string>
+    <string name="menu_english">English</string>
+    <string name="menu_foreign">Foreign</string>
+    <string name="menu_favorites">Favorites</string>
 </resources>
