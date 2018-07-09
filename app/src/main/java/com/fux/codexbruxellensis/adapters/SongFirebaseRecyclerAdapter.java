@@ -3,6 +3,7 @@ package com.fux.codexbruxellensis.adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.Set;
 
 public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, SongHolder> {
 
+    private static final String TAG = "SongFirebaseRecyclerAdapter";
     private Context context;
     private SharedPreferences preferences;
     private Set<String> initFavorites;
@@ -32,6 +34,7 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
 
     @Override
     protected void onBindViewHolder(@NonNull SongHolder holder, int position, @NonNull Song currentSong) {
+        Log.d(TAG, "onBindViewHolder: itemcount: " + getItemCount());
         holder.getTitle()
                 .setText(currentSong.getAssociationName().isEmpty() ? currentSong.getTitle() : currentSong.getAssociationName());
         holder.getPageNumber()
@@ -44,10 +47,14 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
         holder.getFavoriteToggleButton()
                 .setOnClickListener(v -> {
                     Set<String> tempFavorites = new HashSet<>(preferences.getStringSet("favorites", new HashSet<>()));
-                    if (holder.getFavoriteToggleButton().isChecked())
+                    if (holder.getFavoriteToggleButton().isChecked()) {
                         tempFavorites.add(currentSong.getTitle());
-                    else
+                        currentSong.setFavorite(true);
+                    }
+                    else {
                         tempFavorites.remove(currentSong.getTitle());
+                        currentSong.setFavorite(false);
+                    }
                     editor.putStringSet("favorites", tempFavorites);
                     editor.apply();
                 });

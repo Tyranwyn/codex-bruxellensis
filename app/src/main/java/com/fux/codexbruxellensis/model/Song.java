@@ -16,6 +16,7 @@ public class Song implements Serializable {
 
     private Integer page;
     private boolean removed;
+    private boolean favorite;
 
     public Song() {}
 
@@ -121,5 +122,13 @@ public class Song implements Serializable {
     public Song setBattleCry(String battleCry) {
         this.battleCry = battleCry;
         return this;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

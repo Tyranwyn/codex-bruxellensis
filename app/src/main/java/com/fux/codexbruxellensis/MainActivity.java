@@ -89,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (getTitle().equals(getResources().getString(R.string.menu_all)) || getTitle().equals(getResources().getString(R.string.app_name)))
             attachRecyclerViewAdapter(databaseReference.child("songs"));
-        else
-            attachRecyclerViewAdapter(createCategoryQueryBasedOnTitle());
         adapter.startListening();
     }
 
@@ -203,10 +201,6 @@ public class MainActivity extends AppCompatActivity {
                         .build();
         adapter = new SongFirebaseRecyclerAdapter(this, songOptions, sharedPreferences, sharedPreferences.getStringSet("favorites", new HashSet<>()));
         songRecyclerView.setAdapter(adapter);
-    }
-
-    private Query createCategoryQueryBasedOnTitle() {
-        return databaseReference.child("songs").orderByChild("category").equalTo(getTitle().toString().toUpperCase());
     }
 
     public static boolean isCantusModus() {

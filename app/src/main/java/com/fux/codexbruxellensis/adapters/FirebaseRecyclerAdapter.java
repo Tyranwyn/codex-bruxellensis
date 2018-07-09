@@ -11,12 +11,14 @@ import android.widget.Filterable;
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.ObservableSnapshotArray;
+import com.fux.codexbruxellensis.model.Song;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is a generic way of backing a {@link RecyclerView} with a Firebase location. It
@@ -29,17 +31,17 @@ import java.util.List;
  * @param <T>  The Java class that maps to the type of objects stored in the Firebase location.
  * @param <VH> The {@link RecyclerView.ViewHolder} class that contains the Views in the layout that
  *             is shown for each object.
+ *
+ *            https://gist.github.com/Kishanjvaghela/67c42f8f32efaa2fadb682bc980e9280
  */
 public abstract class FirebaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> implements FirebaseAdapter<T>, Filterable {
     private static final String TAG = "FirebaseRecyclerAdapter";
 
-    private final ObservableSnapshotArray<T> mSnapshots;
+    private ObservableSnapshotArray<T> mSnapshots;
     private final List<T> list, backupList;
     private CustomFilter mCustomFilter;
     private boolean isFiltarable;
-
-    // https://gist.github.com/Kishanjvaghela/67c42f8f32efaa2fadb682bc980e9280
 
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
@@ -185,10 +187,7 @@ public abstract class FirebaseRecyclerAdapter<T, VH extends RecyclerView.ViewHol
 
     @Override
     public Filter getFilter() {
-        if (mCustomFilter == null) {
-            mCustomFilter = new CustomFilter();
-        }
-        return mCustomFilter;
+        return mCustomFilter == null ? new CustomFilter() : mCustomFilter;
     }
 
     public class CustomFilter extends Filter {
