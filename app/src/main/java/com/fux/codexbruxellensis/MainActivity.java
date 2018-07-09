@@ -2,6 +2,7 @@ package com.fux.codexbruxellensis;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,6 @@ import android.view.MenuItem;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.fux.codexbruxellensis.adapters.SongFirebaseRecyclerAdapter;
-import com.fux.codexbruxellensis.model.Preferences_;
 import com.fux.codexbruxellensis.model.Song;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,7 +29,9 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @EActivity
 public class MainActivity extends AppCompatActivity {
@@ -48,12 +50,11 @@ public class MainActivity extends AppCompatActivity {
     @ViewById
     FloatingActionButton button;
 
-    @Pref
-    static Preferences_ preferences;
-
     protected static FirebaseDatabase database;
     protected static DatabaseReference databaseReference;
     protected SongFirebaseRecyclerAdapter adapter;
+
+    private static SharedPreferences sharedPreferences;
     private SearchView searchView;
 
     private static boolean cantusModus = false;
@@ -63,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         setTheme(cantusModus ? R.style.Theme_AppCompat_NoActionBar : R.style.Theme_AppCompat_DayNight_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @AfterViews
+    void getPreferences() {
+        sharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
     }
 
     @AfterViews
@@ -107,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
                 adapter.stopListening();
                 attachRecyclerViewAdapter(databaseReference.child("songs"));
                 adapter.startListening();
-            } else {
+            } else if (itemTitle.equals(getResources().getString(R.string.menu_favorites))){
+
+            }
+            else {
                 adapter.stopListening();
                 attachRecyclerViewAdapter(databaseReference.child("songs").orderByChild("category").equalTo(itemTitle.toUpperCase()));
                 adapter.startListening();
@@ -149,12 +158,6 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        adapter.stopListening();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_view, menu);
 
@@ -187,12 +190,18 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.stopListening();
+    }
+
     private void attachRecyclerViewAdapter(Query songsQuery) {
         FirebaseRecyclerOptions<Song> songOptions =
                 new FirebaseRecyclerOptions.Builder<Song>()
                         .setQuery(songsQuery, Song.class)
                         .build();
-        adapter = new SongFirebaseRecyclerAdapter(this, songOptions, preferences);
+        adapter = new SongFirebaseRecyclerAdapter(this, songOptions, sharedPreferences, sharedPreferences.getStringSet("favorites", new HashSet<>()));
         songRecyclerView.setAdapter(adapter);
     }
 

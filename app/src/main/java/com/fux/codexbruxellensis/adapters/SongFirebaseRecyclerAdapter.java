@@ -1,34 +1,33 @@
 package com.fux.codexbruxellensis.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.fux.codexbruxellensis.MainActivity;
 import com.fux.codexbruxellensis.R;
 import com.fux.codexbruxellensis.SongDetailActivity_;
-import com.fux.codexbruxellensis.model.Preferences_;
 import com.fux.codexbruxellensis.model.Song;
 import com.fux.codexbruxellensis.viewholders.SongHolder;
 
-import org.androidannotations.annotations.EBean;
-
+import java.util.HashSet;
 import java.util.Set;
 
 public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, SongHolder> {
 
     private Context context;
-    private Preferences_ preferences;
+    private SharedPreferences preferences;
+    private Set<String> initFavorites;
 
-    public SongFirebaseRecyclerAdapter(Context context, @NonNull FirebaseRecyclerOptions<Song> options, Preferences_ preferences) {
+    public SongFirebaseRecyclerAdapter(Context context, @NonNull FirebaseRecyclerOptions<Song> options,
+                                       SharedPreferences preferences, Set<String> initFavorites) {
         super(options, true);
         this.context = context;
         this.preferences = preferences;
+        this.initFavorites = initFavorites;
     }
 
     @Override
@@ -38,16 +37,19 @@ public class SongFirebaseRecyclerAdapter extends FirebaseRecyclerAdapter<Song, S
         holder.getPageNumber()
                 .setText(currentSong.getPage().toString());
 
-        Set<String> favoredSongs = preferences.favorites().get();
-        holder.getFavoriteToggleButton().setChecked(favoredSongs.contains(currentSong.getTitle()));
+        holder.getFavoriteToggleButton().setChecked(initFavorites.contains(currentSong.getTitle()));
+
+        SharedPreferences.Editor editor = preferences.edit();
 
         holder.getFavoriteToggleButton()
                 .setOnClickListener(v -> {
+                    Set<String> tempFavorites = new HashSet<>(preferences.getStringSet("favorites", new HashSet<>()));
                     if (holder.getFavoriteToggleButton().isChecked())
-                        favoredSongs.add(currentSong.getTitle());
+                        tempFavorites.add(currentSong.getTitle());
                     else
-                        favoredSongs.remove(currentSong.getTitle());
-                    preferences.favorites().put(favoredSongs);
+                        tempFavorites.remove(currentSong.getTitle());
+                    editor.putStringSet("favorites", tempFavorites);
+                    editor.apply();
                 });
 
         holder.getParentLayout()
