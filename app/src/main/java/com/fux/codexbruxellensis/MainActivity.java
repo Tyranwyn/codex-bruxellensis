@@ -15,23 +15,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.fux.codexbruxellensis.adapters.SongFirebaseRecyclerAdapter;
+import com.fux.codexbruxellensis.adapters.SongRecyclerAdapter;
 import com.fux.codexbruxellensis.model.Song;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @EActivity
 public class MainActivity extends AppCompatActivity {
@@ -50,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
     @ViewById
     FloatingActionButton button;
 
-    protected static FirebaseDatabase database;
-    protected static DatabaseReference databaseReference;
-    protected SongFirebaseRecyclerAdapter adapter;
+    protected FirebaseFirestore database;
+    protected SongRecyclerAdapter adapter;
 
     private static SharedPreferences sharedPreferences;
     private SearchView searchView;
+    private List<Song> songList = new ArrayList<>();
 
     private static boolean cantusModus = false;
 
@@ -73,23 +74,33 @@ public class MainActivity extends AppCompatActivity {
 
     @AfterViews
     void drawButtonIcon() {
-        button.setImageResource(cantusModus ? R.drawable.ic_day_24px :  R.drawable.ic_night_24px);
+        button.setImageResource(cantusModus ? R.drawable.ic_day_24px : R.drawable.ic_night_24px);
     }
 
     @AfterViews
     void databaseBinding() {
         if (null == database) {
-            database = FirebaseDatabase.getInstance();
-            database.setPersistenceEnabled(true);
+            database = FirebaseFirestore.getInstance();
         }
 
-        databaseReference = database.getReference();
         songRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         songRecyclerView.setVerticalFadingEdgeEnabled(true);
 
-        if (getTitle().equals(getResources().getString(R.string.menu_all)) || getTitle().equals(getResources().getString(R.string.app_name)))
-            attachRecyclerViewAdapter(databaseReference.child("songs"));
-        adapter.startListening();
+        database.collection("songs")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                        task.getResult()
+                                .forEach(document -> songList.add(
+                                        document.toObject(Song.class)
+                                                .setId(document.getId())
+                                                .setFavorite(sharedPreferences.getStringSet("favorites", new HashSet<>()).contains(document.getId()))
+                                ));
+                    else
+                        Log.d(TAG, "Error getting documents: " + task.getException());
+                    songList.sort(Comparator.comparing(Song::getPage));
+                    renderRecyclerView(songList);
+                });
     }
 
     @AfterViews
@@ -108,16 +119,17 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawers();
             String itemTitle = item.getTitle().toString();
             if (itemTitle.equals(getResources().getString(R.string.menu_all))) {
-                adapter.stopListening();
-                attachRecyclerViewAdapter(databaseReference.child("songs"));
-                adapter.startListening();
-            } else if (itemTitle.equals(getResources().getString(R.string.menu_favorites))){
-
-            }
-            else {
-                adapter.stopListening();
-                attachRecyclerViewAdapter(databaseReference.child("songs").orderByChild("category").equalTo(itemTitle.toUpperCase()));
-                adapter.startListening();
+                updateFavorites();
+                renderRecyclerView(songList);
+            } else if (itemTitle.equals(getResources().getString(R.string.menu_favorites))) {
+                updateFavorites();
+                renderRecyclerView(songList.stream().filter(Song::isFavorite).collect(Collectors.toList()));
+            } else {
+                updateFavorites();
+                List<Song> tempList = songList.stream()
+                        .filter(song -> song.getCategory().toString().equals(itemTitle.toUpperCase()))
+                        .collect(Collectors.toList());
+                renderRecyclerView(tempList);
             }
             setTitle(itemTitle);
             return true;
@@ -135,25 +147,6 @@ public class MainActivity extends AppCompatActivity {
         cantusModus = !cantusModus;
         recreate();
     }
-
-    /*@AfterViews
-    void runner() {
-        final Handler handler = new Handler();
-        class MyRunnable implements Runnable {
-            private Handler handler;
-            private RecyclerView songRecyclerView;
-            public MyRunnable(Handler handler, RecyclerView songRecyclerView) {
-                this.handler = handler;
-                this.songRecyclerView = songRecyclerView;
-            }
-            @Override
-            public void run() {
-                this.handler.postDelayed(this, 500);
-                System.out.println("offset: " + songRecyclerView.computeVerticalScrollOffset());
-            }
-        }
-//        handler.post(new MyRunnable(handler, songRecyclerView));
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -188,23 +181,21 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        adapter.stopListening();
-    }
-
-    private void attachRecyclerViewAdapter(Query songsQuery) {
-        FirebaseRecyclerOptions<Song> songOptions =
-                new FirebaseRecyclerOptions.Builder<Song>()
-                        .setQuery(songsQuery, Song.class)
-                        .build();
-        adapter = new SongFirebaseRecyclerAdapter(this, songOptions, sharedPreferences, sharedPreferences.getStringSet("favorites", new HashSet<>()));
+    private void renderRecyclerView(List<Song> songList) {
+        adapter = new SongRecyclerAdapter(this, songList, sharedPreferences);
         songRecyclerView.setAdapter(adapter);
     }
 
     public static boolean isCantusModus() {
         return cantusModus;
+    }
+
+    private void updateFavorites() {
+        songList = songList.stream()
+                .map(song -> song.setFavorite(
+                        sharedPreferences.getStringSet("favorites", new HashSet<>())
+                                .contains(song.getId())))
+                .collect(Collectors.toList());
     }
 
 }

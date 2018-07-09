@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Song implements Serializable {
 
+    private String id;
     private Category category;
     private String title;
     private String bgInfo;
@@ -20,11 +21,15 @@ public class Song implements Serializable {
 
     public Song() {}
 
-    public Song(String title, String bgInfo, String lyrics) {
-        this.title = title;
-        this.bgInfo = bgInfo;
-        this.lyrics = lyrics;
+    public String getId() {
+        return id;
     }
+
+    public Song setId(String id) {
+        this.id = id;
+        return this;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -128,7 +133,8 @@ public class Song implements Serializable {
         return favorite;
     }
 
-    public void setFavorite(boolean favorite) {
+    public Song setFavorite(boolean favorite) {
         this.favorite = favorite;
+        return this;
     }
 }
