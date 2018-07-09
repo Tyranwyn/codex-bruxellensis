@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">Codex Bruxellensis</string>
     <string name="menu_all">All</string>
     <string name="menu_association">Association</string>
     <string name="menu_official">Official</string>

@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
     @AfterViews
     void drawButtonIcon() {
-        System.out.println(getResources().getConfiguration().getLocales());
         button.setImageResource(cantusModus ? R.drawable.ic_day_24px :  R.drawable.ic_night_24px);
     }
 
