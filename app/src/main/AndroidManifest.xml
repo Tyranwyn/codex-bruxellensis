@@ -14,7 +14,9 @@
         <meta-data android:name="android.app.default_searchable"
             android:value=".MainActivity_" />
         <activity android:name=".MainActivity_"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW"/>
@@ -25,7 +27,9 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".SongDetailActivity_"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>
