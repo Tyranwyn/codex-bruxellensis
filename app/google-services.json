@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:920899628278:android:ef277d668fe25c97",
         "android_client_info": {
-          "package_name": "com.fux.codexbruxellensis"
+          "package_name": "com.fux.codex"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "920899628278-tbbovfac44d34nkfags5aab160a8kv89.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fux.codexbruxellensis",
+            "package_name": "com.fux.codex",
             "certificate_hash": "593f3d68bcf90c42d90fb777edf0afc9e191d7c1"
           }
         },
