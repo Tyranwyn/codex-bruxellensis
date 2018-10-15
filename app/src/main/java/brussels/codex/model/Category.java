@@ -1,4 +1,4 @@
-package com.fux.codex.model;
+package brussels.codex.model;
 
 public enum Category {
     ASSOCIATION,

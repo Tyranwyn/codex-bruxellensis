@@ -1,4 +1,4 @@
-package com.fux.codex;
+package brussels.codex;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -19,9 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.fux.codex.adapters.SongRecyclerAdapter;
-import com.fux.codex.model.Category;
-import com.fux.codex.model.Song;
+import brussels.codex.adapters.SongRecyclerAdapter;
+import brussels.codex.model.Category;
+import brussels.codex.model.Song;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.androidannotations.annotations.AfterViews;

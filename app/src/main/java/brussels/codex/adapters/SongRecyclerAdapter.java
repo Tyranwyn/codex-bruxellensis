@@ -1,4 +1,4 @@
-package com.fux.codex.adapters;
+package brussels.codex.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
-import com.fux.codex.R;
-import com.fux.codex.SongDetailActivity_;
-import com.fux.codex.model.Song;
-import com.fux.codex.viewholders.SongHolder;
+import brussels.codex.R;
+import brussels.codex.SongDetailActivity_;
+import brussels.codex.model.Song;
+import brussels.codex.viewholders.SongHolder;
 
 import java.util.ArrayList;
 import java.util.HashSet;

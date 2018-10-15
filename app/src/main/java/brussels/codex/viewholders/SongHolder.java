@@ -1,4 +1,4 @@
-package com.fux.codex.viewholders;
+package brussels.codex.viewholders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.fux.codex.R;
+import brussels.codex.R;
 
 public class SongHolder extends RecyclerView.ViewHolder {
     private TextView title;

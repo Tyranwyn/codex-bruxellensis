@@ -1,4 +1,4 @@
-package com.fux.codex;
+package brussels.codex;
 
 import org.junit.Test;
 

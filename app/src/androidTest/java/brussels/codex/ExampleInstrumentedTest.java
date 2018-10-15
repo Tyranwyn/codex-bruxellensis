@@ -1,4 +1,4 @@
-package com.fux.codex;
+package brussels.codex;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

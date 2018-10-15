@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fux.codex">
+    package="brussels.codex">
     
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
@@ -13,7 +13,7 @@
         android:hardwareAccelerated="true">
         <meta-data android:name="android.app.default_searchable"
             android:value=".MainActivity_" />
-        <activity android:name="com.fux.codex.MainActivity_"
+        <activity android:name="brussels.codex.MainActivity_"
             android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -26,7 +26,7 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
-        <activity android:name="com.fux.codex.SongDetailActivity_"
+        <activity android:name="brussels.codex.SongDetailActivity_"
             android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
