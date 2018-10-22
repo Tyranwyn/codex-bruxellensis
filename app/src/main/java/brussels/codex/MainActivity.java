@@ -119,51 +119,44 @@ public class MainActivity extends AppCompatActivity {
             item.setChecked(true);
             drawerLayout.closeDrawers();
             String itemTitle = item.getTitle().toString();
+
+            updateFavorites();
             if (itemTitle.equals(getResources().getString(R.string.menu_all))) {
-                updateFavorites();
                 renderRecyclerView(songList);
             } else if (itemTitle.equals(getResources().getString(R.string.menu_favorites))) {
-                updateFavorites();
                 renderRecyclerView(songList.stream().filter(Song::isFavorite)
                         .collect(Collectors.toList()));
             } else if (itemTitle.equals(getResources().getString(R.string.menu_association))) {
-                updateFavorites();
                 List<Song> tempList = songList.stream()
                         .filter(song -> song.getCategory().toString().equals(Category.ASSOCIATION.toString()))
                         .collect(Collectors.toList());
                 renderRecyclerView(tempList);
             } else if (itemTitle.equals(getResources().getString(R.string.menu_dutch))) {
-                updateFavorites();
                 List<Song> tempList = songList.stream()
                         .filter(song -> song.getCategory().toString().equals(Category.DUTCH.toString()))
                         .collect(Collectors.toList());
                 renderRecyclerView(tempList);
             } else if (itemTitle.equals(getResources().getString(R.string.menu_english))) {
-                updateFavorites();
                 List<Song> tempList = songList.stream()
                         .filter(song -> song.getCategory().toString().equals(Category.ENGLISH.toString()))
                         .collect(Collectors.toList());
                 renderRecyclerView(tempList);
             } else if (itemTitle.equals(getResources().getString(R.string.menu_french))) {
-                updateFavorites();
                 List<Song> tempList = songList.stream()
                         .filter(song -> song.getCategory().toString().equals(Category.FRENCH.toString()))
                         .collect(Collectors.toList());
                 renderRecyclerView(tempList);
             } else if (itemTitle.equals(getResources().getString(R.string.menu_foreign))) {
-                updateFavorites();
                 List<Song> tempList = songList.stream()
                         .filter(song -> song.getCategory().toString().equals(Category.FOREIGN.toString()))
                         .collect(Collectors.toList());
                 renderRecyclerView(tempList);
             } else if (itemTitle.equals(getResources().getString(R.string.menu_german))) {
-                updateFavorites();
                 List<Song> tempList = songList.stream()
                         .filter(song -> song.getCategory().toString().equals(Category.GERMAN.toString()))
                         .collect(Collectors.toList());
                 renderRecyclerView(tempList);
             } else if (itemTitle.equals(getResources().getString(R.string.menu_official))) {
-                updateFavorites();
                 List<Song> tempList = songList.stream()
                         .filter(song -> song.getCategory().toString().equals(Category.OFFICIAL.toString()))
                         .collect(Collectors.toList());
