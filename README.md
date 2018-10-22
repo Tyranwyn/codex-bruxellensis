@@ -5,4 +5,5 @@ instead of carrying around a real book. The idea to create an app for that, was 
 Studenten Codex for the students of Louvain
 
 Feel free to donate :)
+
 <http://paypal.me/tyranwyn>
